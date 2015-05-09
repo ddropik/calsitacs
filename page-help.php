@@ -23,8 +23,8 @@ get_header(); ?>
 
                 <?php
 				// /the query 
-				$the_query = new WP_Query( 'page_id=209');
-				//$the_query = new WP_Query( 'page_id=316'); ?>
+				//$the_query = new WP_Query( 'page_id=209');
+				$the_query = new WP_Query( 'page_id=316'); ?>
 
 				<?php if ( $the_query->have_posts() ) : ?>
 
@@ -55,8 +55,8 @@ get_header(); ?>
 			 <!--<h2>CALSNET Service Form</h2>!-->
 		<?php 
 				// the query
-				$the_query = new WP_Query( 'page_id=209');
-				//$the_query = new WP_Query( 'page_id=303'); ?>
+				//$the_query = new WP_Query( 'page_id=209');
+				$the_query = new WP_Query( 'page_id=303'); ?>
 				
 				<?php if ( $the_query->have_posts() ) : ?>
 

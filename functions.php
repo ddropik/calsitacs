@@ -164,3 +164,96 @@ $output = $copyright;
 }
 return $output;
 }
+
+
+
+/**
+ * Register,enqueue and localize scripts for itacs ajax
+ * @return [none] [description]
+ */
+function itacs_ajax_scripts(){
+
+wp_register_script( 'ajaxjs', get_template_directory_uri() . '/js/ajax.js', array('jquery')); //register the script for later use in enqueue_script
+
+wp_enqueue_script('ajaxjs'); //enque script
+
+//Params: associate script handle, define response object name, make php data available to script(wordpress expects ajaxurl for ajax to work)
+wp_localize_script( 'ajaxjs', 'MyAjax',  
+	array(
+		'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		'security' => wp_create_nonce( 'my-special-string' )
+		) 
+);
+
+} //END function itacs_ajax_scripts()
+
+//hook itacs_ajax_scripts function into wp_enqueue_scripts
+add_action( 'wp_enqueue_scripts', 'itacs_ajax_scripts' );
+
+
+/**
+ * The ajax server side event handler, it passes data to the javascript success callback function.
+ * @return String returns JSON encoded string as the response to the JQuery Ajax request
+ */
+function itacs_ajax_callback(){ 
+	
+	$args = array( //parameters for get_posts function
+	'posts_per_page'   => -1,
+	'offset'           => 0,
+	'category'         => '',
+	'category_name'    => '',
+	'orderby'          => 'post_date',
+	'order'            => 'DESC',
+	'include'          => '',
+	'exclude'          => '',
+	'meta_key'         => '',
+	'meta_value'       => '',
+	'post_type'        => 'post',
+	'post_mime_type'   => '',
+	'post_parent'      => '',
+	'post_status'      => 'publish',
+	'suppress_filters' => true 
+	);
+
+	$posts_array = get_posts( $args ); //variable containing all post data
+
+	$newArray = array(); //declare an empty array to contain modifified version of $posts_array
+
+
+
+	//iterate over $posts_array to add 'post_permalink' property to $newArray
+	foreach($posts_array as $key_0 => $val_0){
+
+		$newArray[$key_0]=$val_0; //duplicate all key-value pairs of posts_array object
+
+		$thisID = $newArray[$key_0]->ID; //declare and define new variable for the ID property of the currently selected iteration
+
+		$newArray[$key_0]->post_permalink = get_permalink($thisID); //add property 'post_permalink' for the permalink of currently selected iteration
+
+	}
+
+	$JSON_posts_array = json_encode($newArray); //Pass data from PHP array to JSON String using json_encode
+
+	check_ajax_referer( 'my-special-string', 'security');
+ 	
+	header( "Content-Type: application/json" ); //Explicity defines Content type as JSON
+
+	echo $JSON_posts_array;
+ 	
+	die(); // this is required to return a proper result
+}
+
+if ( is_admin() ) {
+    add_action( 'wp_ajax_my_frontend_action', 'itacs_ajax_callback' ); // for users logged in, on frontend
+    add_action( 'wp_ajax_nopriv_my_frontend_action', 'itacs_ajax_callback' ); // for non-logged in users, frontend
+    //add_action( 'wp_ajax_my_backend_action', 'itacs_ajax_callback' ); //for logged in back end users
+    // Add other back-end action hooks here
+} else {
+    // Add non-Ajax front-end action hooks here
+}
+
+
+
+
+
+

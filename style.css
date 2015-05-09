@@ -46,3 +46,6 @@ and Blueprint http://www.blueprintcss.org/
 	12.2 - Galleries
 --------------------------------------------------------------*/
 @import url("dist/styles/minified/master.min.css");
+
+/* Uncomment this to use the unminified development css */
+/* @import url("dist/styles/unminified/master.css"); */

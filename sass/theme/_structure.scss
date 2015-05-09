@@ -11,22 +11,56 @@ html body.page{
 
 #page {
   background: linear-gradient(to bottom, rgba(150,0,1,.8) 50%,rgba(150,0,1,0) 100%);
+  
+  z-index:2;
+  
 }
 
-.home .headerContainer {
+.page-home .headerContainer {
 
   position: relative;
-  background: $primaryHeaderBg url("../../../dist/images/equipmentcollection2.svg") no-repeat;
-  background-position: 50% 50%;
-  background-size: 100% auto;
-}
-
-.headerContainer {
-
+  //background: $primaryHeaderBg url("../../../dist/images/equipmentcollection2.svg") no-repeat;
+  //background-position: 50% 50%;
+  //background-size: 100% auto;
+  z-index: 0;
   position: relative;
   background: $primaryHeaderBg;
   background-position: center center;
   background-size: 100% auto;
+  overflow:hidden;
+
+    div.opacityLayer{
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index: 1;
+    background: url("../../../dist/images/equipmentcollection2.svg") no-repeat;
+    background-position: 50% 50%;
+    background-size: 100% auto;
+    opacity: 2;
+    transition: 2s;
+    pointer-events:none;
+
+
+    &.service-search-active{
+      opacity: .4;
+    }
+
+  }
+}
+
+.headerContainer {
+  position: relative;
+  background: $primaryHeaderBg;
+  background-position: center center;
+  background-size: 100% auto;
+
+
+  
+
+
 }
 
 #page {

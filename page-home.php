@@ -12,6 +12,8 @@
 
 get_header(); ?>
 
+<?php ?>
+
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 		
@@ -35,7 +37,6 @@ get_header(); ?>
 				</div>
 			</div>
 
-
 			<?php while ( have_posts() ) : the_post(); ?>
 
 				<?php //get_template_part( 'content', 'page' ); ?>
@@ -52,5 +53,11 @@ get_header(); ?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
-<?php //get_sidebar(); ?>
+<?php //get_sidebar(); 
+//logit($wp_query,'$wp_query: ');
+//logit($translation_array,'$translation_array: ');
+//logit($commonSearchArray,'$commonSearchArray: ');
+//logit($commonSearchArray2,'$commonSearchArray2: ');
+
+?>
 <?php get_footer(); ?>

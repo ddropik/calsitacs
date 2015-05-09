@@ -1,0 +1,143 @@
+body div#comments{
+  margin: 0 2em 1em 2em;
+  padding:1em;
+  background-color:darken($lightGrayBorder, 8%);
+  box-sizing: border-box;
+  border-radius:8px;
+
+  h2.comments-title{
+    margin-bottom:.5em;
+    //background-color: peachpuff;
+    line-height: 1.5em;
+  }
+
+  ol.comment-list{
+
+    li.comment {
+      margin-bottom:1em;
+
+      article.comment-body {
+        background-color:lighten($uwTan, 5%);
+        @extend .cf;
+        //background-color: seagreen;
+        //background-color:$lightGrayBorder;
+        position: relative;
+
+
+        footer.comment-meta {
+
+          @extend .cf;
+          //background-color: lightgreen;
+          background-color:darken($lightGrayBorder, 32%);
+
+          div.comment-author, div.vcard {
+            width: auto;
+            height: 32px;
+            float: left;
+            line-height: 32px;
+            overflow: hidden;
+
+            img {
+              display: block;
+              float: left;
+            }
+
+            b.fn {
+              height: 32px;
+              line-height: 32px;
+              margin-left: 5px;
+
+            }
+
+            span.says {
+              height: 32px;
+              line-height: 32px;
+            }
+
+          }
+
+          div.comment-metadata {
+            width: auto;
+            height: 32px;
+            line-height: 32px;
+            float: left;
+            position: absolute;
+            top: 0;
+            right: 10%;
+            span.edit-link {
+              position: absolute;
+              top: 0;
+              right: -25%;
+            }
+          }
+        }
+
+        div.comment-content {
+          @extend .cf;
+          padding: .5em;
+
+        }
+
+        div.reply {
+          float: right;
+          display: block;
+          margin: .5em;
+          background-color:transparent;
+        }
+      } //END <article>.comment-body
+
+      ol.children{
+        margin:1em 0 1em 2em;
+      }
+
+    } //END <li>.comment
+  }
+
+  div#respond{
+    //background-color: red;
+    background-color:darken($lightGrayBorder, 32%);
+    padding:.5em;
+
+    h3#reply-title{
+      //background-color:thistle;
+      margin:.25em 0;
+    }
+
+    form.comment-form{
+      //background-color:tomato;
+      //background-color:$uwTan;
+      background-color:darken($lightGrayBorder, 32%);
+      padding:.5em;
+
+      p.logged-in-as{
+        //background-color:mediumaquamarine;
+        margin:.25em 0;
+      }
+      p.comment-form-comment{
+        //background-color: silver;
+        label{
+          margin-bottom:.5em;
+          display:block;
+          &::after{
+            content:": ";
+          }
+        }
+      }
+
+      p.form-allowed-tags{
+        display:none;
+      }
+
+      p.form-submit{
+        //background-color:burlywood;
+        margin: 1em 0 0 0;
+      }
+    }
+
+  }
+
+  textarea{
+
+
+  }
+}

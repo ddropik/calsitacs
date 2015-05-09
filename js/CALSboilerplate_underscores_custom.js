@@ -1,26 +1,31 @@
 /* global jQuery:false */
 
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//  Notes: new requirements for SPO
+	//  * Redudce animation speed by .5 or even less
+	//  * searchbox more prominent, replace background fill (see http://tympanus.net/Development/TextInputEffects/    ...akira)
+	//  
+	//  * Initially, list displays common items, but search suggests as user types (fading away irrelevent list items)
+	//  * make responsive
+	//  *add headings to common search items
+	//  *left align search items, and width should match searchfield or "how may...help you"
+	//  *if # of suggested/common search items is in excess, programatically show a button for more search results
+	//  * the icons in the white area below should not have description text, but rather be like a grid, and show more details on hover card
+	//  *typography fixes ...see notes
+	//  
+	//  
+	//  Additional:
+	//  
+	//  *some type of "more info" modal (or other animated div) 
+	//  
+	// 
+	//
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 (function($) {
 
 	//alert("test");
-	
-	/*swal({
-		title: "An input!",   
-		text: "Write something interesting:",
-		type: "input",   showCancelButton: true,
-		closeOnConfirm: false,
-		animation: "slide-from-top" },
-
-		function(inputValue){
-			if (inputValue === false) return false;
-
-			if (inputValue === ""){ 
-				swal.showInputError("You need to write something!");
-				return false
-			}
-			swal("Nice!", "You wrote: " + inputValue, "success");
-		});
-		*/
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Fixed Footer Feature:
@@ -30,10 +35,12 @@
 	
 	var windowHeight = $( window ).height(); // get the computed height of the browser viewport
 	var footerHeight = 250; // hardcoded height for the footer
-	var bodyHeight = $("body.page").height(); // get the computed height of the body
+	var bodyHeight = $("body").height(); // get the computed height of the body
 
 	//Console.log for Debugging
-	//console.log("Position: " + $("#colophon").css("position") + ", windowHeight: " + windowHeight + ", bodyHeight: "+bodyHeight +", bodyHeight+250: "+(bodyHeight+250));
+	//console.log("footerHeight: "+ footerHeight);
+
+	//console.log("Position: " + $("#colophon").css("position") + ", windowHeight: " + windowHeight + ", bodyHeight: "+bodyHeight +", bodyHeight_fixed: "+(bodyHeight+250));
 
 	// If footer is position fixed. This matters because whether fixed vs static affects calculation of body height.
 	if($("#colophon").css("position") == "fixed"){
@@ -64,7 +71,7 @@
 
 		var windowHeight = $( window ).height(); // get the computed height of the browser viewport
 		var footerHeight = 250; // get the computed height of the footer
-		var bodyHeight = $("body.page").height(); // get the computed height of the body
+		var bodyHeight = $("body").height(); // get the computed height of the body
 	
 		// If footer is position fixed. This matters because whether fixed vs static affects calculation of body height.
 		if($("#colophon").css("position") == "fixed"){
@@ -101,179 +108,155 @@
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	if($('body').is('.page-home')){
 
-		var documentHeight = $(document).height(); //Height of document
-		var windowHeight = $(window).height(); //Height of window
-		var currentScrollVal = 0;
-
-		var lastScrollTop = 0;
-
-/*
-		$(window).scroll(function() {
-			var st = $(this).scrollTop();
-			var diff = Math.abs(lastScrollTop-st);
-
-			var myTop = parseInt($(".service-pop-out").css("top"),10);
-
-			if(st > lastScrollTop){
-				console.log("scrolling down, st: "+st+", diff: "+diff+", myTop: "+myTop);
-				myTop = myTop - diff;
-				//console.log("st: "+st+" myTop: "+myTop);
-
-			}else{
-				console.log("scrolling up, st: "+st+" myTop: "+myTop);
-				myTop = myTop + diff;
-			}
-
-			lastScrollTop=st;
-
-
-		$( ".service-pop-out" ).css({top:myTop});
-
-
-
-
-	    });*/
-
-		//Initialize position.left and position.right on page load
-		var position = $("#services-searchfield").position();
-		var posLeft = "left";
-		var posTop = "top";
-		var opts={};
-		opts[posLeft]=position.left;
-		opts[posTop]=position.top;
-
-
-
-
-	    
-
-		
-		//Ensure that service-pop-out is absolutely centered where it should be on page load.
-		$( ".service-pop-out" ).css({top:position.top,left:position.left});
-
-		//on resize dynamically change posLeft and documentHeight
-		$(window).resize(function(){
-			var documentHeight = $(window).height();
-
-			position = $("#services-searchfield").position();
-			posLeft = "left";
-			posTop = "top";
-			opts={};
-			opts[posLeft]=position.left;
-			opts[posTop]=position.top;
-
-			var searchFieldLeft = $("#services-searchfield").position().left;
-			
-
-			if(!$(".service-pop-out").hasClass("open")){
-
-
-				$( ".service-pop-out" ).css({left:searchFieldLeft});
-				
-			}
-			
-
-		});
-
-		///function to animate service pop out, when the wpadminbar is not showing
-		function animateSPO(e){
-
-			e.preventDefault();
-
-			window.thisTop = parseInt($(".service-pop-out").css("top"),10);
-			window.thisLeft = parseInt($(".service-pop-out").css("left"),10);
-
-			$(".service-pop-out").velocity({
-
-			properties:{ width: "100%", height: windowHeight , left: "0px", top: "0px", opacity:"1"/*,translateX:"-200px"*/},
-						 		
-			options:{ duration: "800", easing:"easeInOutCubic", display:"block"}
-
-			});
-
-			
-
-			$(".helpOption")
-			.velocity("transition.slideLeftIn", { stagger: 250 })
-			.delay(750)
-	    	
-
-			$(".service-pop-out").addClass("open");
-
-		}
-
-		//function to animate service pop out, when the wpadminbar is showing
-		function adminAnimateSPO(e){
-
-			e.preventDefault();
-
-			window.thisTop = parseInt($(".service-pop-out").css("top"),10);
-			window.thisLeft = parseInt($(".service-pop-out").css("left"),10);
-
-			$(".service-pop-out").velocity({
-
-			properties:{ width: "100%", height: "100%"/*windowHeight*/ , left: "0px", top: "32px", opacity:"1"/*,translateX:"-200px"*/}, //top is 32px, to account for wpadminbar
-						 		
-			options:{ duration: "800", easing:"easeInOutCubic", display:"block"}
-
-			});
-
-			
-			$(".helpOption")
-			.velocity("transition.slideLeftIn", { stagger: 250 })
-			.delay(750)
-	    	
-
-			$(".service-pop-out").addClass("open");
-
-		}
-
-
-		$( ".pop-out-close" ).click(function(e) {
-
-			e.preventDefault();
-
-			//alert("thisTop: "+window.thisTop+", thisLeft: "+window.thisLeft);
-
-		  	$(".service-pop-out").velocity({
-
-		 		properties:{ width: "100", height: "100" ,left:window.thisLeft, top:window.thisTop, opacity:"0"},
-		 		
-		  		options:{ duration: "800", easing:"easeInOutCubic", display:"none"}
-			});
-
-			$(".service-pop-out").removeClass("open");
-		});
-
-
-		//Conditional that executes correct function according to whether wpadminbar is showing
+		//Check if user is logged in
 		if($("#wpadminbar").length) {
-			//wpadminbar showing, user logged on
-			$( ".our-services" ).click(function(e) {
-			adminAnimateSPO(e);		
-			});
-		
 
-			$("#services-searchfield").focus(function(e) {
-			adminAnimateSPO(e);
-			});
+		//User logged in
 
 		}else{
 
-			//wpadminbar not showing, user logged off
-			$( ".our-services" ).click(function(e) {
-			animateSPO(e);		
-			});
+		//User not logged in
+
+		} 
+
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// service search feature
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
+		var serviceSearchIsActive = false; //returns whether service search is active. Initialized to false.
+		var iconClickInProgress = false;
 
-			$("#services-searchfield").focus(function(e) {
-			animateSPO(e);
+		function serviceSearchActivate(){
+
+			$("body").addClass("service-search-active"); //add said class to body
+
+			$(".serviceWrapper.service-search-active > div").css("display", "block");
+
+			//Remove old sub heading text with fade transition and replace it 
+			$(".subHeading").fadeOut("slow",function(){
+
+				$(this).text("How may we help you?").fadeIn();
+
 			});
 
-		} //end else
+			$(".branding").animate({opacity:0},700);
+
+			//add .service-search-active to several selectors 
+			$(" .height-div, .homePageFeature, .subHeading, #services-searchfield, #input-16, .cyan, .serviceWrapper, .opacityLayer ").addClass("service-search-active");
 
 
-		
+			if( $(".cyan").is(".service-search-active")){
+
+				//$(".searchResultsWrapper").velocity("transition.slideUpIn", {duration:1}).velocity("fadeIn", { duration: 1000 });
+				$(".searchResultsWrapper").velocity("fadeIn", { duration: 1000 });
+				return false;
+			}
+
+			
+			
+			//if .searchResults exists in DOM
+			if( $(".searchResults").length > 0){
+
+				var searchWidthArray = []; //define new array
+				var singleSearchResultArr = [];
+
+				//iterate over all items matching .singleSearchResult 
+				$(".singleSearchResult").each(function(index, value){
+
+					var widths = parseInt($(this).css("width")); // variable assigned width(without px units) of current item in the iteration
+					console.log(widths);
+					searchWidthArray.push(widths); //this current item width pushed onto the searchWidthArray
+					singleSearchResultArr.push(value);
+
+
+				});
+				//console.log(searchWidthArray);
+				//console.log(singleSearchResultArr);
+				//console.log(typeof singleSearchResultArr);
+
+
+				}
+			
+			
+		}
+
+		function serviceSearchDeactivate(){
+
+			$("body").removeClass("service-search-active"); //remove said class from body
+
+			//reinstate the original subheading text with fade transition
+			$(".subHeading").fadeOut("slow",function(){
+
+				$(this).text("Here for you.").fadeIn();
+
+				$(".branding").animate({opacity:1},700);
+
+			});
+
+			
+
+			setTimeout(function(){
+
+			//remove .service-search-active to several selectors 
+			$(" .height-div, .homePageFeature, .subHeading, #services-searchfield, #input-16, .cyan, .opacityLayer ").removeClass("service-search-active");
+			$(".searchResultsWrapper").velocity("fadeOut", { duration: 1000 });
+			
+			},200);
+	
+			
+
+			
+
+		}
+		//On mouse down, prevent certain elements from triggering onBlur event
+		$(".serviceWrapper > div > a, .serviceHeading, .singleSearchResult").mousedown(function(){
+
+			iconClickInProgress = true;
+			//console.log("iconClickInProgress: "+iconClickInProgress);
+		});
+
+		//On mouse up, restore original onBlur functionality
+		$(".serviceWrapper > div > a, .serviceHeading, .singleSearchResult").mouseup(function(){
+			iconClickInProgress = false;
+			//console.log("iconClickInProgress: "+iconClickInProgress);
+		});
+
+		//Handle searchfield on focus event
+		$("#services-searchfield, #input-16").focus(function(e) {
+
+			serviceSearchIsActive = true;
+
+				if($("body").hasClass("page-home")){
+
+				serviceSearchActivate();
+
+				}
+
+
+		});
+
+		//Handle searchfield on blur event
+		$("#services-searchfield, #input-16").on('blur',function() {
+			if(iconClickInProgress==false){
+				
+				if( $("body").hasClass("page-home") ){
+
+				serviceSearchDeactivate(); 
+				
+				}
+
+				
+			}
+			
+			serviceSearchIsActive = false;
+
+			
+
+		});
+
+		//console.log( testjs_object);
+
+	
 	} //end if is page-home
 
 

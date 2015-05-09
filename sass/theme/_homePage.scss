@@ -4,6 +4,11 @@
   color: $white;
   background-color: transparent;
   min-height: 400px;
+  z-index: 2;
+  position:relative;
+  top:0;
+  -webkit-transition: top 1s ; /* Safari */
+  transition: top 1s;
 
   .button.large {
     padding: 2em;
@@ -33,6 +38,48 @@
     -webkit-font-smoothing: antialiased;
     font-size: 3.7em;
     margin-top: 0px;
+    &.service-search-active{
+      //TODO
+    }
+  }
+
+  div.services-searchbox{
+    padding:2% 0;
+      input#services-searchfield{
+        //padding-left:25px;
+        -webkit-transition-property: width, height; 
+        transition-property: width,height;
+
+        webkit-transition-duration: 1s;
+        transition-duration: 1s;
+
+        webkit-transition-timing-function:ease;
+        transition-timing-function:ease;
+
+        width:16%;
+        height:3em;
+        //background: url("../../../img/search.png") no-repeat 4px 4px;
+        background-color:white;
+        text-transform: capitalize;
+        padding:10px;
+        border:solid 7px white;
+        border-radius:initial;
+        display:none;
+
+
+
+        &.service-search-active{
+          width:24%;
+          height:5em;
+        }
+      }
+      a.our-services{
+        padding:3px;
+        line-height: 1.5em;
+        display: none;
+      
+      }
+
   }
 
   .equipment {
@@ -80,77 +127,500 @@
     }
 }
 
-.service-pop-out{
-  width:100px;
-  height:100px;
-  display:none;
-  background-color:$uwTan;
-  //position:fixed;
-  position:fixed;
-  z-index:20;
-  //top:400px;
-  //left:400px;
-  //margin-left: 4%;
-  //margin-top:2%;
-  .pop-out-heading{
-    position:absolute;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Service Search field animation feature
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.headerContainer.service-search-active{
+  //background:none;
+  //background-color:pink;
+ 
+}
+
+.homePageFeature.service-search-active{
+top:-8em;
+}
+
+.height-div{
+  height: 0;
+  -webkit-transition: height .6s; /* Safari */
+  transition: height .6s;
+  &.service-search-active{
+    height: 9em;
   }
 }
 
-.SPOWrapper{
-  display:block;
-  background-color:$calsitacsOffWhite;
-  width:60%;
-  height:100%;
-  position:relative;
-  margin:5% auto;
-  box-shadow: 10px 10px 5px #888888;
+.cyan{
+width:95%;
+height:60%;
+position:absolute;
+top:35%;
+left:2.5%;
+display:none;
+z-index:2;
+&.service-search-active{
+    display:block;
+    //display:none;
+
+  }
 }
 
-.pop-out-close{
-  background-color:none;
-  position:absolute;
-  //bottom:10%;
-  right:0;
-  top:0;
-  //right:10%;
+.jqueryFontAnimationFix{
+  opacity: 0.99;
+  filter:alpha(opacity=99);
 }
 
-.red{
-   width:25%;
-  height:100%;
-  //background-color:red;
+.commonSearches{
+
+  color:rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-weight:100;
+  @extend .jqueryFontAnimationFix;
+ 
+}
+
+.cyan.service-search-active div.searchResultsWrapper{
+   /* width:25%;
+  height: 100%;
   float:left;
-}
-
-.orange{
-   width:25%;
-  height:100%;
-  //background-color:orange;
-  float:left;
-}
-
-.yellow{
-   width:25%;
-  height:100%;
-  //background-color:yellow;
-  float:left;
-}
-.green{
-  width:25%;
-  height:100%;
-  //background-color:green;
-  float:left;
-}
-.helpOption{
-  position: absolute;
-  bottom:5%;
-  margin-left:5%
-}
-
-svg.closeButton{
-  width:40px;
-  height:40px;
   box-sizing:border-box;
-  padding:5px;
+  padding:2%;
+  padding-top:8%;
+  display:block;
+  background-color:pink; // OLD STYLES   */ 
+
+  width: 40%;
+  height: 100%;
+  float: left;
+
+  box-sizing: border-box;
+
+  display: block;
+
+  //background-color: pink;
+  position: relative;
+  margin: 0 auto;
+  top: 30%;
+  left: 30%;
+  & div.searchResults {
+    //background-color:blue;
+    margin: 0 auto;
+    width:80%;
+    @extend .jqueryFontAnimationFix;
+
+      & > ul{
+        @extend .jqueryFontAnimationFix;
+     
+ 
+      & > li.singleSearchResult{
+        margin: 0 0 .4em 0;
+        text-align:left;
+        font-family: Raleway, sans-serif;
+        font-size:1.2em;
+        letter-spacing: 1px;
+        color:$white;
+        margin: 0 auto .5em;
+        @extend .jqueryFontAnimationFix;
+
+
+        & a.linkSearchResult{
+
+        text-decoration:underline;
+        @extend .jqueryFontAnimationFix;
+
+          //unvisited link
+          &:link{ 
+            @extend .commonSearches;
+          }
+
+          //visited link
+          &:visited{
+            @extend .commonSearches;
+          }
+
+          //mouse over link
+          &:hover{
+            color:$uwTan;
+            
+          }
+
+          //selected link
+          &:active{
+
+          }
+        }
+      }
+      & >li.commonSearches{
+        @extend .commonSearches;
+        margin-bottom:10px;
+        margin-top:15px;
+
+        }
+
+        & >li.moreCommon{
+          margin-top:.5em;
+          & >a{
+
+          @extend .commonSearches;
+
+          &:visited{
+
+            @extend .commonSearches;
+
+            }
+
+          }
+
+
+        }
+      }
+    }
+  }
+
+
+
+.cyan.service-search-active div.serviceWrapper{
+  width:25%;
+  height: 100%;
+  float:left;
+  box-sizing:border-box;
+  padding:2%;
+  padding-top:8%;
+  display:none;
+  //visibility:hidden;
+  //-webkit-transition: visibility 2.3s; /* Safari */
+  //transition: visibility 2.3s;
+
+  &.service1{
+
+  //background-color:tan;
+
+  }
+
+  &.service2{
+
+  //background-color:aliceblue;
+
+  }
+
+  &.service3{
+
+ // background-color:magenta;
+
+  }
+
+  &.service4{
+
+  //background-color:orange;
+
+  }
+
+  &.service-search-active{
+   //visibility: visible;
+   display:none;
+   div{
+      //margin-left:35%;
+      position:absolute;
+      left:38%;
+      max-width:128px;
+      overflow: hidden;
+      transition:2s;
+      display:none;
+      &:hover{
+              transform: scale(1.2,1.2);
+      }
+      a.serviceIcon{
+        display:inline-block;
+        float:left;
+      }
+      a.serviceHeading{
+        float:left;
+        clear:both;
+        width:100%;
+        text-align: center;
+        margin: .2em 0;
+        font-family: Raleway, sans-serif;
+        font-weight:300;
+        font-size:1.6em;
+        letter-spacing: 2px;
+        
+        -webkit-transition-property: font-size, color; /* Safari */
+        transition-property: font-size, color;
+
+        webkit-transition-duration: .8s;
+        transition-duration:.8s;
+
+        webkit-transition-timing-function:ease;
+        transition-timing-function:ease;
+
+        //unvisited link
+        &:link{ 
+          color:rgba(255,255,255,.9);
+          text-decoration: none;
+        }
+
+        //visited link
+        &:visited{
+          color:rgba(255,255,255,.9);
+          text-decoration: none;
+        }
+
+        //mouse over link
+        &:hover{
+          color:$uwTan;
+          font-size: 1.8em;
+          
+        }
+
+        //selected link
+        &:active{
+
+        }
+      }
+   }
+
+  }
+}
+
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+textarea {
+  color: #666;
+  border: none;
+  border-radius: 3px;
+}
+
+.input {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 1em;
+  max-width: 400px;
+  width: calc(100% - 2em);
+  vertical-align: top;
+}
+
+.input__field{
+  position: relative;
+  display: block;
+  float: right;
+  padding: 0.8em;
+  width: 60%;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  color: #aaa;
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-appearance: none; /* for box shadows to show on iOS */
+}
+
+.input__field:focus {
+  outline: none;
+}
+
+.input__label {
+  display: inline-block;
+  float: right;
+  padding: 0 1em;
+  width: 40%;
+  color: #6a7989;
+  font-weight: bold;
+  font-size: 70.25%;
+  -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.input__label-content {
+  position: relative;
+  display: block;
+  padding: 1.6em 0;
+  width: 100%;
+}
+
+.input--minoru{
+    position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 1em;
+  max-width: 400px;
+  width: calc(100% - 2em);
+  vertical-align: top;
+
+  width: 100%;
+  background: transparent;
+  box-shadow: 0px 0px 0px 2px transparent;
+  color: #eca29b;
+  -webkit-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+
+
+}
+
+/* Minoru */
+.input__field--minoru {
+  width: 100%;
+  background: #fff;
+  box-shadow: 0px 0px 0px 2px transparent;
+  color: #eca29b;
+  -webkit-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+}
+
+.input__label--minoru {
+  padding: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.input__label--minoru::after {
+  content: '';
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 4em;
+  box-shadow: 0px 0px 0px 0px;
+  color: rgba(199,152,157, 0.6);
+}
+
+.input__field--minoru:focus {
+  box-shadow: 0px 0px 0px 2px #eca29b;
+}
+
+.input__field--minoru:focus + .input__label--minoru {
+  pointer-events: none;
+}
+
+.input__field--minoru:focus + .input__label--minoru::after {
+  -webkit-animation: anim-shadow 0.3s forwards;
+  animation: anim-shadow 0.3s forwards;
+}
+
+@-webkit-keyframes anim-shadow {
+  to {
+    box-shadow: 0px 0px 100px 50px;
+      opacity: 0;
+  }
+}
+
+@keyframes anim-shadow {
+  to {
+    box-shadow: 0px 0px 100px 50px;
+      opacity: 0;
+  }
+}
+
+.input__label-content--minoru {
+  padding: 0.75em 0.15em;
+}
+
+
+/* Yoko */
+.input__field--yoko {
+  z-index: 10;
+  width: 100%;
+  background: transparent;
+  color: #f5f5f5;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  padding-bottom:7px;
+  font-size:3.5em;
+
+}
+
+input#input-16{
+  padding:0 .5em;
+  position:relative;
+  top:10px;
+
+  &:focus{
+    color:white;
+  }
+}
+
+.input__label--yoko {
+  position: relative;
+  width: 100%;
+  color: $uwTan;
+  text-align: left;
+  font-size:1em;
+}
+
+
+
+.input__label--yoko::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  height: 4em;
+  background: $uwTan;
+  -webkit-transform: perspective(1000px) rotate3d(1, 0, 0, 90deg);
+  transform: perspective(1000px) rotate3d(1, 0, 0, 90deg);
+  -webkit-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+    /*
+    background: -webkit-linear-gradient(top, rgba(255,0,0,0), rgba(255,0,0,1)); 
+    background: -o-linear-gradient(bottom, rgba(255,0,0,0), rgba(255,0,0,1)); 
+    background: -moz-linear-gradient(bottom, rgba(255,0,0,0), rgba(255,0,0,1)); 
+    background: linear-gradient(to bottom, rgba(255,0,0,0), rgba(255,0,0,1));  */
+}
+
+.input__label--yoko::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0.25em;
+  background: $uwTanDarker;
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+
+.input__label-content--yoko {
+  padding: 0.75em 0;
+}
+
+.input__field--yoko:focus,
+.input--filled .input__field--yoko {
+  opacity: 1;
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+}
+
+.input__field--yoko:focus + .input__label--yoko::before,
+.input--filled .input__label--yoko::before {
+  -webkit-transform: perspective(1000px) rotate3d(1, 0, 0, 0deg);
+  transform: perspective(1000px) rotate3d(1, 0, 0, 0deg);
+}
+
+.input__field--yoko:focus + .input__label--yoko,
+.input--filled .input__label--yoko {
+  pointer-events: none;
+}
+
+.input__field--yoko:focus + .input__label--yoko::after,
+.input--filled .input__label--yoko::after {
+  -webkit-transform: perspective(1000px) rotate3d(1, 0, 0, -90deg);
+  transform: perspective(1000px) rotate3d(1, 0, 0, -90deg);
 }
